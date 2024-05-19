@@ -39,3 +39,4 @@ def solution(dice):
          
         
     return [i+1 for i in dic[max_key]]
+    # return dic[max_key]
