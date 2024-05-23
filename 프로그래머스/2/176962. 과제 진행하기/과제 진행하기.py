@@ -17,7 +17,7 @@ def solution(plans):
     while plans:
         u_name, u_start, u_running_time = plans.popleft()
         
-        if isinstance(u_start, str):
+        if isinstance(u_start, str): # u_start 가 이미 int 일 경우 in 연산자에서 에러가 나기에 이거 해주는거임
             if ':' in u_start: # u_start 에 숫자가 아닌 게 껴있으면 다음 작업 실행 ex)'12:00'
                 time, minutes = u_start.split(':')
                 u_start = int(time) * 60 + int(minutes)
@@ -39,27 +39,22 @@ def solution(plans):
             # computer(temp)를 i_name으로 바꿔주고 i_start는 science의 i_start + i_running_time (810)
             # ,i_running_time은 temp[1]가 됨
             
-            
             answer.append(i_name)
             
-        
             if stop_stack:
                 plans.appendleft([u_name, u_start, u_running_time]) # history는 다시 되돌려놔야함
                 # answer.append(i_name)
                 temp = stop_stack.pop() # 가장 최근에 중지된 애 
                 i_name, i_start, i_running_time = temp[0], i_start + i_running_time, temp[1] # computer, 810, 90
-            # else:
-            #     answer.extend(list(plans))
-            #     break
+                
             else:
                 i_name, i_start, i_running_time = u_name, u_start, u_running_time
-
-    else:
+                
+    else: # plans 원소 순회가 모두 끝남
         answer.append(i_name)
         while stop_stack:
             temp = stop_stack.pop()[0]
             answer.append(temp)
         
-
     
     return answer
