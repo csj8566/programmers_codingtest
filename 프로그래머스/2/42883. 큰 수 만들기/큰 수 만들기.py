@@ -1,14 +1,23 @@
-def solution(number, k):
-    stack = []
-    for num in number:
-        while stack and k > 0 and stack[-1] < num:
-            stack.pop()
-            k -= 1
-        stack.append(num)
-    
-    # 아직 제거해야 할 숫자가 남아있는 경우 뒤에서부터 제거
-    while k > 0:
-        stack.pop()
-        k -= 1
+from heapq import heappush, heappop
 
-    return ''.join(stack)
+def solution(number, k):
+    initial_k = k
+    
+    answer = ''
+    n = len(number)
+    hq = []
+
+    for idx, num in enumerate(number): # (0,1), (1,9), (2,2), (3,4)
+        while k and hq and int(hq[-1]) < int(num):
+            hq.pop()
+            k -= 1
+        hq.append(num)
+    answer = ''.join(hq)
+        
+    if len(answer) > n - initial_k:
+        return answer[:n-initial_k]
+    
+    return answer
+            
+        
+    
