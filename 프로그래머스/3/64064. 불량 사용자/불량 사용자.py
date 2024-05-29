@@ -3,11 +3,7 @@ import re
 def solution(user_id, banned_id):
     # lst = [[] for i in range(len(banned_id))]
     lst = []
-    # print(lst)
-    
-    # pattern = re.compile(r'fr.d.')
-    # print(pattern.findall("frodo, fradi, crodo, abc123, frodoc"))
-    
+
     for idx_ban, ban in enumerate(banned_id): # "fr*d*", "abc1**"
         pattern = ban.replace('*','.')
         pattern = re.compile(pattern)
@@ -20,7 +16,7 @@ def solution(user_id, banned_id):
     
     def DFS(depth, path, visited):
         if depth == len(lst):
-            answer.add(tuple(sorted(path)))
+            answer.add(tuple(sorted(path))) #set에는 tuple은 추가 가능하지만 list는 안됨
             return
         for user in lst[depth]:
             if user not in visited:
@@ -31,4 +27,5 @@ def solution(user_id, banned_id):
         
     answer = set()
     DFS(0, [], set())
+    print(lst)
     return len(answer)
