@@ -2,7 +2,7 @@ def solution(money):
     
     # 1.메모이제이션 : 현재 인덱스의 집까지 고려했을때 돈의 최댓값
     memo = [0 for _ in range(len(money))]
-    
+
     
     # 2. 초기상태, 종료조건
     # 2-1. 첫 집을 터는 경우
