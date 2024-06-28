@@ -1,38 +1,60 @@
-def find(root, node): # root는 각 원소의 루트를 담은 배열 / node는 현재 검사할 노드
-    if root[node] == node: # 만약 본인이 root라면
-        return node # 본인 반환
-    root[node] = find(root, root[node]) # 만약 본인이 root 가 아니라면 재귀로 root를 찾아감
-    return root[node]
-
-def union(root, rank, x_root, y_root):
-    if x_root != y_root:
-        if rank[x_root] > rank[y_root]:
-            root[y_root] = x_root
-        elif rank[x_root] < rank[y_root]:
-            root[x_root] = y_root
-        else:
-            root[y_root] = x_root
-            rank[x_root] += 1
-
-
 def solution(n, costs):
     answer = 0
+    root = [i for i in range(n)] # 0, 1, 2, 3 (루트가 처음엔 자기자신. 다 떨어져 있으므로)
     edge = 0
-    root = [i for i in range(n)] # [0,1,2,3]
-    rank = [0] * n 
-    costs.sort(key=lambda x:x[2]) # 크루스칼 알고리즘을 사용하기 위한 가중치 오름차순
+    rank = [0 for _ in range(n)]
+    print(rank)
     
     
-    for cost in costs: # [0,1,1]
+    
+    
+# -------------------------------------------------------------------------------------------
+    # 두 섬이 연결된 섬인지 아닌지 확인하는 find 코드
+    # 근데 find 2번 해서 각각의 루트가 같은지 다른지 비교하는 게 맞는 방법인듯
+    # 그렇다면 find() 는 root를 찾는 함수가 돼야겠네
+    def find(node):
+        # 만약 root 라면 자기자신을 반환
+        if root[node] == node:
+            return node
+        # 만약 root 가 아니라면(자기자신이 아니라면) 부모를 찾아감. -> 본인스스로가 나오면 root니 그때까지
+        else:
+            root[node] = find(root[node])
+            return root[node]
+        
+# -------------------------------------------------------------------------------------------
+    # 두 섬을 연결하는 union 코드
+    def union(x_root, y_root):
+        nonlocal edge, answer
+        if rank[x_root] > rank[y_root]:
+            root[y_root] = x_root
+            edge += 1
+            answer += cost[2]
+        elif rank[x_root] < rank[y_root]:
+            root[x_root] = y_root
+            edge += 1
+            answer += cost[2]
+        else:
+            root[y_root] = x_root
+            edge += 1
+            rank[x_root] += 1
+            answer += cost[2]
+# -------------------------------------------------------------------------------------------   
+    # costs를 비용에 따라 오름차순 정렬
+    costs.sort(key=lambda x:x[2])
+    
+    
+    # costs의 원소 하나씩을 돌면서 확인
+    for cost in costs:
+        # edge 가 n -1 개가 되면 코드 종료
         if edge == n-1:
             break
-        x_root = find(root, cost[0])
-        y_root = find(root, cost[1])
+        
+        # 만약 두 섬이 연결되지 않은 섬이면 -> 두 섬을 연결 -> edge 하나 추가 -> 비용만큼 answer에 더하기
+        x_root = find(cost[0])
+        y_root = find(cost[1])
+        
         if x_root != y_root:
-            union(root, rank, x_root, y_root)
-            edge += 1
-            answer += cost[2]               
-    
-    return answer
+            union(x_root, y_root)
 
-print(solution(4, [[0,1,1],[0,2,2],[1,2,5],[1,3,1],[2,3,8]]))
+            
+    return answer
