@@ -1,0 +1,23 @@
+import sys
+input = sys.stdin.readline
+
+N, K = list(map(int, input().split()))
+num_list = list(map(int, input().split()))
+
+# 2진수의 1의 개수를 기준으로 내림차순
+bin_list = [bin(i)[2:] for i in num_list]
+
+def count_one(binary_number):
+	cnt = 0
+	for letter in binary_number:
+		if letter == '1':
+			cnt += 1
+	return cnt
+
+count_one_list = [count_one(i) for i in bin_list]
+
+new_list = list(zip(num_list, count_one_list))
+new_list.sort(key=lambda x: (x[1], x[0]), reverse=True)
+
+print(new_list[K-1][0])
+
