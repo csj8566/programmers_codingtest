@@ -1,0 +1,12 @@
+# -*- coding: utf-8 -*-
+# UTF-8 encoding when using korean
+import sys
+input = sys.stdin.readline
+N, K = input().split()
+num_lst = input().split()
+
+answer = 0
+for num in num_lst:
+	if K not in num:
+		answer += 1
+print(answer)
