@@ -28,7 +28,8 @@ def play(board, r1, c1, r2, c2):
     max_lose = 0
     
     # 다음 위치를 오프셋으로 구현
-    for dr, dc in [(-1,0), (1,0), (0,-1), (0,1)]:
+    move = [(-1,0), (1,0), (0,-1), (0,1)]
+    for dr, dc in move:
         nr, nc = r1 + dr, c1 + dc
         
         # board 범위를 벗어나지 않았고 빈 발판이 아니어야 이동 가능
