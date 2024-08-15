@@ -37,7 +37,7 @@ def solution():
             # 오른쪽 부분집합에서 c를 넘지 않는 최대 가능한 값 찾기
             count += bisect_right(right_weights, max_weight - left)
     
-    print(count)
+    return count
 
     
-solution()
+print(solution())
