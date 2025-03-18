@@ -2,7 +2,7 @@ def solution(money):
     max_money = 0
     
     # 1. dp 배열
-    # dp[i] 의 의미 : 현재 인덱스의 집까지 털었을 때 얻을 수 있는 최대 금액
+    # dp[i] 의 의미 : 현재 인덱스의 집까지 고려했을 때 얻을 수 있는 최대 금액
     dp1 = [0 for _ in range(len(money))]
     dp2 = [0 for _ in range(len(money))]
     
@@ -22,7 +22,8 @@ def solution(money):
     # 2-2. 첫 번째 집을 안 턴다 : 마지막 집을 털 수 있는 옵션이 생긴다
     dp2[0] = 0
     dp2[1] = money[1] # 첫 번째 집을 안털었으니까 두 번째 집은 터는 게 최대값임
-     
+    
+    # 3-2. 점화식
     for i in range(2, len(money)):
         # 지금 집을 털고 이전 집을 안 터는 게 나음? 아니면 지금 집을 안 털고 이전 집을 터는 게 나음?
         dp2[i] = max(money[i] + dp2[i - 2], dp2[i - 1])
