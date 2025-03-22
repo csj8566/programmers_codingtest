@@ -7,7 +7,7 @@ def solution(maps):
     
     def BFS():
         visited = set()
-        # visited.add((0,0)) # 첫번째 위치를 방문처리 하고 시작하는지 아닌지 헷갈리네..아마 아닌듯
+        visited.add((0,0)) # 이 문제에서는 한 번 역류해도 상관없지만, 웬만하면 시작지점 방문처리하는 게 좋음
         queue = deque()
         queue.append( ((0,0), 1) ) 
         
