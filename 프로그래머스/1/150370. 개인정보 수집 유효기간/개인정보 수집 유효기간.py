@@ -1,3 +1,5 @@
+# 소요시간 : 28분
+
 from collections import defaultdict
 
 def solution(today, terms, privacies):
@@ -41,7 +43,9 @@ def solution(today, terms, privacies):
         print("pagi_date :", pagi_date)
         
         # 만약에 파기해야하는 날이 지났다면 append
-        # 근데 같은 날짜인 것까지는 괜찮음
+        # 근데 같은 날짜인 것까지는 괜찮음 -> 괜찮은 게 아니었다 ?!
+        # 아 한 달이 지나는 날에 파기해야 되는구나
+        # 27일 지난 것 까지는 ok, 근데 28 지난 날 땡 하면 파기해야 됨
         if pagi_date <= today_date:
             answer.append(idx + 1)
             print()
