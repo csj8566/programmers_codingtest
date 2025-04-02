@@ -14,33 +14,21 @@ def solution(lottos, win_nums):
     zero_count = 0
     for l in lottos:
         for w in win_nums:
-            # print("현재 l :",l)
-            # print("현재 w :", w)
-            # print()
+
             if l == 0:
                 zero_count += 1
-                # print("zero_count 추가! :", zero_count)
-                # print()
                 break
                 
             if l == w:
                 same_count += 1
-                # print("same_count 추가! :", same_count)
-                # print()
+                break
 
                 
     # 최대는 0 개수 만큼 더해서
     answer.append(win_dict[same_count + zero_count])
-    # print("최대 ---------------------")
-    # print("same_count :", same_count)
-    # print("zero_count :", zero_count)
-    # print()
     
     # 최소는 현재 상태 그대로
     answer.append(win_dict[same_count])
-    # print("최소 ---------------")
-    # print("same_count :", same_count)
-    # print("zero_count :", zero_count)
     
     
     return answer
