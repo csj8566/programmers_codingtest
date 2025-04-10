@@ -6,10 +6,12 @@ def solution(user_id, banned_id):
 
     for idx_ban, ban in enumerate(banned_id): # "fr*d*", "abc1**"
         pattern = ban.replace('*','.')
-        pattern = re.compile(pattern)
-        # print(pattern)
+        pattern = re.compile('^'+pattern+'$')
+        print(pattern)
+        print(type(pattern))
         
-        matched = [i for i in user_id if len(ban) == len(i) and re.fullmatch(pattern, i)]
+        # matched = [i for i in user_id if len(ban) == len(i) and re.fullmatch(pattern, i)]
+        matched = [i for i in user_id if re.findall(pattern, i)]
         # lst[idx_ban].append(matched)
         lst.append(matched)
     print(lst)
