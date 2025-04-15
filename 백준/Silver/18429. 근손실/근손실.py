@@ -8,7 +8,7 @@ def DFS(start, depth, visited):
   global answer
 
   # 종료 조건 : N-1까지 내려왔을 때. 이 때는 무조건 되는 거니까 answer 에 + 1 한다, 그리고 return
-  if depth == N:
+  if depth == N-1:
     answer += 1
     return 
 
