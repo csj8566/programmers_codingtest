@@ -1,32 +1,37 @@
 from collections import deque
 
 def solution(maps):
+    answer = 0
     moves = [(-1, 0), (1, 0), (0, -1), (0, 1)] # 상 하 좌 우
-    rows = len(maps) # 세로 길이
-    cols = len(maps[0]) # 가로 길이
+    num_rows = len(maps)
+    num_cols = len(maps[0])
     
-    def BFS():
-        visited = set()
-        visited.add((0,0)) # 이 문제에서는 한 번 역류해도 상관없지만, 웬만하면 시작지점 방문처리하는 게 좋음
+    visited = [[False] * num_cols for _ in range(num_rows)]
+    # print(visited)
+    
+    def BFS(visited):
         queue = deque()
-        queue.append( ((0,0), 1) ) 
         
+        visited[0][0] = True
+        queue.append((0, 0, 1))
+    
         while queue:
-            current_state, move_count = queue.popleft()
-            current_row, current_col = current_state
-            if (current_row, current_col) == (rows - 1, cols - 1):
-                return move_count
+            current_row, current_col, current_cost = queue.popleft()
+            
+            # 종료 조건
+            if current_row == num_rows - 1 and current_col == num_cols - 1:
+                return current_cost
             
             for row_move, col_move in moves:
-                next_row, next_col = current_row + row_move, current_col + col_move
+                next_row = current_row + row_move
+                next_col = current_col + col_move
                 
-                # maps를 벗어나지 않고, 벽이 아닌 경우에만
-                if (0 <= next_row < rows) and (0 <= next_col < cols) and (maps[next_row][next_col]) == 1:
-                    if (next_row, next_col) not in visited:
-                        visited.add((next_row, next_col))
-                        queue.append( ((next_row, next_col), move_count + 1) )
-                    
+                if 0<=next_row<num_rows and 0<=next_col<num_cols:
+                    if maps[next_row][next_col] == 1 and not visited[next_row][next_col]: # 벽으로 막혀있지 않음
+                        visited[next_row][next_col] = True
+                        queue.append((next_row, next_col, current_cost + 1))
+                        
         return -1
         
-    
-    return BFS()
+        
+    return BFS(visited)
