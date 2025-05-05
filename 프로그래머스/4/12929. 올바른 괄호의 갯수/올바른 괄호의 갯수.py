@@ -1,25 +1,51 @@
 def solution(n):
-    answer = []
+    answer = 0
     
-    def DFS(current_state, num_open, num_closed):
+    def DFS(stack, num_open, num_closed):
+        nonlocal answer
         
-        # 종료 조건 : 열린 거 n개, 닫힌 거 n개 정상적으로 다 썼을 때
-        if num_open == n and num_closed == n:
-            answer.append(current_state)
+        # 종료조건 
+        # 열린 괄호랑 닫힌 괄호의 숫자의 합이 예외에 안걸리고 2n이 되면 정답
+        if len(stack) == (2 * n):
+            answer += 1
+            return 
+        
+        # 백트래킹 조건을 여기서?
+        if num_open > n:
+            return 
+        
+        elif num_open < num_closed:
             return
         
-        # 만약 열린 괄호 개수보다 닫힌 괄호 개수가 더 많다면 그건 안됨
-        # 만약 열린 괄호가 더 많은 경우에는 그 다음에는 열린 괄호든, 닫힌 괄호든 올 수 있음
-        # 근데 열린 괄호는 최대 n개까지밖에 올 수 없음
-        if num_open < n:
-            DFS(current_state + '(', num_open + 1, num_closed)
-            
-        if num_closed < num_open:
-            DFS(current_state + ')', num_open, num_closed + 1)
-            
-    
-    # 모든 탐색을 다 끝내구 가능한 경우의 수를 return 하면 그게 정답
-    DFS('', 0, 0)
-    
-    
-    return len(answer)
+        
+        for i in ['(', ')']:
+            if (i == '(') and (num_open < n):
+                stack.append(i)
+                num_open += 1
+                DFS(stack, num_open, num_closed)
+                num_open -= 1
+                stack.pop()
+                
+            elif (i == ')') and (num_open > num_closed):
+                stack.append(i)
+                num_closed += 1
+                DFS(stack, num_open, num_closed)
+                num_closed -= 1
+                stack.pop()
+                
+        
+        
+    DFS([], 0, 0)
+        
+    return answer
+
+
+
+'''
+(1. 닫힌 괄호로 시작하면 올바르지 않은 괄호임) -> 2번에 포함되는 내용임
+2. 닫힌 괄호의 수가 열린 괄호보다 많아지면 올바르지 않은 괄호임.
+3. 열린 괄호의 수가 N개보다 많을 수는 없음
+
+visited 가 필요없을 것 같은데? 중복이 있을 수가 없음
+그리고 visited 는 왼쪽 오른쪽중에 거르는 건데 거를 필요가 없음
+'''
