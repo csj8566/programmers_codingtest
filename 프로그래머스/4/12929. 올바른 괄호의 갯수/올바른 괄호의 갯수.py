@@ -11,11 +11,11 @@ def solution(n):
             return 
         
         # 백트래킹 조건을 여기서?
-        if num_open > n:
-            return 
+#         if num_open > n:
+#             return 
         
-        elif num_open < num_closed:
-            return
+#         elif num_open < num_closed:
+#             return
         
         
         for i in ['(', ')']:
